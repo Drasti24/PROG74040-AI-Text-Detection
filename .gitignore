@@ -1,6 +1,6 @@
-# Dataset
-data/*.csv
-data/*.zip
+# Raw and processed datasets
+data/**/*.csv
+data/**/*.parquet
 
 # Models
 models/
@@ -15,7 +15,7 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-# Virtual Environments
+# Virtual environments
 .venv/
 venv/
 env/
@@ -23,6 +23,6 @@ env/
 # VS Code
 .vscode/
 
-# OS
+# OS files
 .DS_Store
 Thumbs.db
