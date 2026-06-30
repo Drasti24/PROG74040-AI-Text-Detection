@@ -2,7 +2,7 @@
 data/*.csv
 data/*.zip
 
-# Trained models
+# Models
 models/
 
 # Outputs
@@ -15,7 +15,7 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-# Virtual environments
+# Virtual Environments
 .venv/
 venv/
 env/
@@ -23,6 +23,6 @@ env/
 # VS Code
 .vscode/
 
-# OS files
+# OS
 .DS_Store
 Thumbs.db
