@@ -112,7 +112,7 @@ function App() {
               </div>
 
               <div className="disclaimer">
-                This score reflects the model&apos;s confidence, not proof of authorship.
+                This score reflects the model's confidence, not proof of authorship.
                 Results may be less reliable for writing styles or sources that differ
                 from the training data.
               </div>

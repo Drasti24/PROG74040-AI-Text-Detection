@@ -1,6 +1,5 @@
 fastapi
 uvicorn[standard]
-torch
-transformers
-huggingface_hub
-safetensors
+scikit-learn
+joblib
+numpy
