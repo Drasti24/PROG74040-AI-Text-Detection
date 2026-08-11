@@ -84,24 +84,25 @@ def predict(request: TextRequest):
 
     transformed_text = vectorizer.transform([text])
 
-    prediction = int(
-        model.predict(transformed_text)[0]
-    )
-
     decision_score = float(
         model.decision_function(transformed_text)[0]
     )
 
-    # Convert decision score into a simple 0–1 display score.
-    # This is not a calibrated probability.
+    AI_THRESHOLD = 0.75
+    HUMAN_THRESHOLD = -0.75
+
+    if decision_score >= AI_THRESHOLD:
+        prediction_label = "AI Generated"
+
+    elif decision_score <= HUMAN_THRESHOLD:
+        prediction_label = "Human Written"
+
+    else:
+        prediction_label = "Uncertain"
+
     confidence_score = 1 / (
         1 + np.exp(-abs(decision_score))
     )
-
-    if prediction == 1:
-        prediction_label = "AI Generated"
-    else:
-        prediction_label = "Human Written"
 
     return {
         "prediction": prediction_label,

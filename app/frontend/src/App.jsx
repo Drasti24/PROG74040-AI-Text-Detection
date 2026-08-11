@@ -23,15 +23,21 @@ function App() {
       const response = await axios.post(
         "https://prog74040-ai-text-detection.onrender.com/predict",
         {
-          text: text
+          text: text,
         }
       );
+
       setResult(response.data);
     } catch (err) {
       console.error(err);
-      setError(
-        "Could not analyze the text. Please make sure the backend is running."
-      );
+
+      if (err.response?.data?.detail) {
+        setError(err.response.data.detail);
+      } else {
+        setError(
+          "Could not analyze the text. Please make sure the backend is running."
+        );
+      }
     } finally {
       setLoading(false);
     }
@@ -48,15 +54,11 @@ function App() {
       <div className="container">
         <div className="header">
           <h1>AI Text Detector</h1>
-          <p>
-            Analyze text using our fine-tuned SVM model.
-          </p>
+          <p>Analyze text using our fine-tuned SVM model.</p>
         </div>
 
         <div className="card">
-          <label htmlFor="text-input">
-            Enter text
-          </label>
+          <label htmlFor="text-input">Enter text</label>
 
           <textarea
             id="text-input"
@@ -67,9 +69,7 @@ function App() {
           />
 
           <div className="info-row">
-            <span>
-              {text.length} characters
-            </span>
+            <span>{text.length} characters</span>
           </div>
 
           <div className="button-row">
@@ -102,7 +102,9 @@ function App() {
               <div className="prediction">
                 {result.prediction === "AI Generated"
                   ? "Likely AI-Generated"
-                  : "Likely Human-Written"}
+                  : result.prediction === "Human Written"
+                    ? "Likely Human-Written"
+                    : "Uncertain"}
               </div>
 
               <div className="confidence">
@@ -111,39 +113,16 @@ function App() {
               </div>
 
               <div className="disclaimer">
-                This score reflects the model&apos;s confidence, not proof of authorship.
-                Results may be less reliable for writing styles or sources that differ
-                from the training data.
+                This score reflects the model&apos;s confidence, not proof of
+                authorship. Results may be less reliable for writing styles or
+                sources that differ from the training data.
               </div>
-
-              {result && (
-                <div className="result-section">
-                  <h3>Result</h3>
-
-                  <h2>
-                    {result.prediction === "AI Generated"
-                      ? "Likely AI-Generated"
-                      : "Likely Human-Written"}
-                  </h2>
-
-                  <p>
-                    Model confidence score:{" "}
-                    {(result.confidence * 100).toFixed(2)}%
-                  </p>
-
-                  <div className="disclaimer">
-                    This score reflects the model's confidence, not proof of authorship.
-                    Results may be less reliable for writing styles or sources that differ
-                    from the training data.
-                  </div>
-                </div>
-              )}
             </div>
           )}
         </div>
 
         <div className="footer-note">
-          Long inputs may be truncated during analysis.
+          Results may be less reliable for very short or unfamiliar text.
         </div>
       </div>
     </div>
