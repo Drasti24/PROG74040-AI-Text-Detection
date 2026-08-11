@@ -49,7 +49,7 @@ function App() {
         <div className="header">
           <h1>AI Text Detector</h1>
           <p>
-            Analyze text using our fine-tuned RoBERTa model.
+            Analyze text using our fine-tuned SVM model.
           </p>
         </div>
 
@@ -115,22 +115,29 @@ function App() {
                 Results may be less reliable for writing styles or sources that differ
                 from the training data.
               </div>
-              <div className="probabilities">
-                <div>
-                  <span>Human</span>
-                  <strong>
-                    {(result.human_probability * 100).toFixed(2)}%
-                  </strong>
-                </div>
 
-                <div>
-                  <span>AI</span>
-                  <strong>
-                    {(result.ai_probability * 100).toFixed(2)}%
-                  </strong>
-                </div>
+              {result && (
+                <div className="result-section">
+                  <h3>Result</h3>
 
-              </div>
+                  <h2>
+                    {result.prediction === "AI Generated"
+                      ? "Likely AI-Generated"
+                      : "Likely Human-Written"}
+                  </h2>
+
+                  <p>
+                    Model confidence score:{" "}
+                    {(result.confidence * 100).toFixed(2)}%
+                  </p>
+
+                  <div className="disclaimer">
+                    This score reflects the model's confidence, not proof of authorship.
+                    Results may be less reliable for writing styles or sources that differ
+                    from the training data.
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
