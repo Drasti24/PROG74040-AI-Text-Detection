@@ -21,12 +21,11 @@ function App() {
       setResult(null);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/predict",
+        "https://prog74040-ai-text-detection.onrender.com/predict",
         {
           text: text
         }
       );
-
       setResult(response.data);
     } catch (err) {
       console.error(err);
@@ -112,11 +111,10 @@ function App() {
               </div>
 
               <div className="disclaimer">
-                This score reflects the model's confidence, not proof of authorship.
+                This score reflects the model&apos;s confidence, not proof of authorship.
                 Results may be less reliable for writing styles or sources that differ
                 from the training data.
               </div>
-
               <div className="probabilities">
                 <div>
                   <span>Human</span>
