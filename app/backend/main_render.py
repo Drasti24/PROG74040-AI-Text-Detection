@@ -1,11 +1,8 @@
-from pathlib import Path
-
 import torch
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-
 from transformers import (
     AutoTokenizer,
     AutoModelForSequenceClassification
@@ -37,26 +34,19 @@ app.add_middleware(
 
 
 # --------------------------------------------------
-# Local RoBERTa model
+# Hugging Face model
 # --------------------------------------------------
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+MODEL_ID = "drasti02/ai-text-detector-roberta"
 
-MODEL_PATH = PROJECT_ROOT / "models" / "roberta_final"
-
-if not MODEL_PATH.exists():
-    raise FileNotFoundError(
-        f"RoBERTa model not found at: {MODEL_PATH}"
-    )
-
-print("Loading local RoBERTa model...")
+print("Loading RoBERTa model from Hugging Face Hub...")
 
 tokenizer = AutoTokenizer.from_pretrained(
-    MODEL_PATH
+    MODEL_ID
 )
 
 model = AutoModelForSequenceClassification.from_pretrained(
-    MODEL_PATH
+    MODEL_ID
 )
 
 model.eval()
@@ -96,7 +86,7 @@ def health():
     return {
         "status": "healthy",
         "model": "RoBERTa",
-        "model_loaded": True
+        "model_source": "Hugging Face Hub"
     }
 
 
